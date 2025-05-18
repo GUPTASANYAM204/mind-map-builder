@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { generateLearningPath } from '../services/aiService';
 import type { LearningPathNode } from '../services/aiService';
 
-type ThemeMode = 'dark' | 'vibrant';
+export type ThemeMode = 'dark' | 'vibrant';
 
 interface NodeData {
   id: string;
@@ -75,7 +75,7 @@ const Canvas: React.FC<CanvasProps> = ({
   });
   const [newNodeText, setNewNodeText] = useState('');
   const [selectedShape, setSelectedShape] = useState<NodeShape>('circle');
-  const [selectedColorScheme] = useState<NodeColorScheme>('pastel');
+  const [selectedColorScheme] = useState<NodeColorScheme>('vibrant');
   const [showSettings, setShowSettings] = useState(false);
   const [learningPath, setLearningPath] = useState<LearningPathNode[] | null>(null);
   const [showLearningPath, setShowLearningPath] = useState(false);
@@ -706,7 +706,7 @@ const Canvas: React.FC<CanvasProps> = ({
                       </div>
                     )}
                     
-                    {step.resources?.length > 0 && (
+                    {step.resources && step.resources.length > 0 && (
                       <div>
                         <strong>Recommended Resources:</strong>
                         <ul>
@@ -717,11 +717,11 @@ const Canvas: React.FC<CanvasProps> = ({
                       </div>
                     )}
                     
-                    {step.prerequisites?.length > 0 && (
+                    {(step.prerequisites ?? []).length > 0 && (
                       <div>
                         <strong>Prerequisites:</strong>
                         <ul>
-                          {step.prerequisites.map((prerequisite, i) => (
+                          {(step.prerequisites ?? []).map((prerequisite, i) => (
                             <li key={i}>{prerequisite}</li>
                           ))}
                         </ul>
